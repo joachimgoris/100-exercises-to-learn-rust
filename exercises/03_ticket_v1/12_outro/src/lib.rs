@@ -11,3 +11,39 @@
 // Integration here has a very specific meaning: they test **the public API** of your project.
 // You'll need to pay attention to the visibility of your types and methods; integration
 // tests can't access private or `pub(crate)` items.
+struct Order {
+    product_name: String,
+    quantity: u32,
+    unit_price: u32
+}
+
+impl Order {
+    pub fn new(product_name: String, quantity: u32, unit_price: u32) -> Self {
+        Self {
+            product_name,
+            quantity,
+            unit_price
+        }
+    }
+
+    fn validate_product_name(product_name: &String) {
+        if product_name.len() == 0 {
+            panic!("Product name must be longer than 0")
+        }
+        if product_name.capacity() > 300 {
+            panic!("Product name cannot be longer than 300 bytes")
+        }
+    }
+
+    fn validate_quantity(quantity: &u32) {
+        if quantity == 0 {
+            panic!("Quantity must be greater than 0")
+        }
+    }
+
+    fn validate_unit_price(unit_price: &u32) {
+        if unit_price == 0 {
+            panic!("Unit price must be greater than 0")
+        }
+    }
+}
