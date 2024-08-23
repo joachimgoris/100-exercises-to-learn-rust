@@ -2,7 +2,8 @@
 //  to get the code to compile.
 
 pub fn summary(ticket: Ticket) -> (Ticket, Summary) {
-    (ticket, ticket.summary())
+    let clone = ticket.clone();
+    (ticket, clone.summary())
 }
 
 pub struct Ticket {
@@ -17,6 +18,12 @@ impl Ticket {
             title: self.title,
             status: self.status,
         }
+    }
+}
+
+impl Clone for Ticket {
+    fn clone(&self) -> Self {
+        Self { title: self.title.clone(), description: self.description.clone(), status: self.status.clone() }
     }
 }
 
