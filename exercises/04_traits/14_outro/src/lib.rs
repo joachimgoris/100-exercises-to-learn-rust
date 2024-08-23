@@ -1,3 +1,5 @@
+use std::ops;
+
 // TODO: Define a new `SaturatingU16` type.
 //   It should hold a `u16` value.
 //   It should provide conversions from `u16`, `u8`, `&u16` and `&u8`.
@@ -8,3 +10,48 @@
 //   It should be possible to print its debug representation.
 //
 // Tests are located in the `tests` folder—pay attention to the visibility of your types and methods.
+#[derive(Debug, PartialEq, PartialOrd)]
+struct SaturatingU16 {
+    value: u16
+}
+
+impl SaturatingU16 {
+    fn new(value: u16) -> Self {
+        SaturatingU16 { value }
+    }
+}
+
+impl From<u16> for SaturatingU16
+{
+    fn from(value: u16) -> Self {
+        SaturatingU16 { value }
+    }
+}
+
+impl From<&u16> for SaturatingU16 {
+    fn from(value: &u16) -> Self {
+        Self::from(*value)
+    }
+}
+
+
+impl From<u8> for SaturatingU16 {
+    fn from(value: u8) -> Self {
+        SaturatingU16 {value: value.into()}
+    }
+}
+
+
+impl From<&u8> for SaturatingU16 {
+    fn from(value: &u8) -> Self {
+        Self::from(*value)
+    }
+}
+
+impl std::ops::Add for SaturatingU16 {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Self::new(self.value.wrapping_add(rhs.value))
+    }
+}

@@ -2,16 +2,25 @@
 //  unless a certain operation has been performed on it.
 //  You can see the expected API in the tests below.
 struct DropBomb {
-    value: u32
+    armed: bool
 }
 
 impl DropBomb {
     fn new() -> DropBomb {
-        DropBomb { value: 5 }
-        panic!("panic!")
+        DropBomb { armed: true }
     }
 
-    fn defuse
+    pub fn defuse(&mut self) {
+        self.armed = false
+    }
+}
+
+impl Drop for DropBomb {
+    fn drop(&mut self) {
+        if self.armed {
+            panic!("bomb exploded!")
+        }
+    }
 }
 
 #[cfg(test)]
