@@ -16,7 +16,7 @@ impl core::ops::Add for WrappingU32 {
     type Output = u32;
 
     fn add(self, rhs: Self) -> Self::Output {
-        
+        Self::new(self.value.wrapping_add(rhs))
     }
 }
 
