@@ -10,13 +10,8 @@ struct Ticket {
 #[derive(Debug, PartialEq)]
 enum Status {
     ToDo,
-    InProgress { assigned_to: Option<String> },
+    InProgress { assigned_to: String },
     Done,
-}
-
-enum Option<T> {
-    Some(T),
-    None,
 }
 
 impl Ticket {
@@ -41,8 +36,9 @@ impl Ticket {
         }
     }
     pub fn assigned_to(&self) -> Option<&String> {
-        if let Status::InProgress { assigned_to } = self.status {
-            assigned_to
+        match &self.status {
+            Status::InProgress { assigned_to } => Some(assigned_to),
+            _ => None,
         }
     }
 }
